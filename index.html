@@ -2,53 +2,829 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
-  <meta name="description" content="My personal website, built from scratch.">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101a29">
+<title>Case File 001 | The Subject</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
+:root {
+  --navy: #101a29;
+  --navy2: #19283a;
+  --paper: #f0e9dc;
+  --ink: #202b32;
+  --green: #82c5a1;
+  --darkgreen: #176b52;
+  --red: #b86b60;
+  --muted: #a3afbc;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --serif: 'Playfair Display', Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background: var(--navy);
+  color: #f0eee8;
+  font-family: var(--sans);
+  line-height: 1.7;
+}
+button, a { font: inherit; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+}
+::selection { background: var(--green); color: var(--navy); }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  min-height: 76px;
+  padding: 15px max(24px, calc((100% - 1120px)/2));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #101a29f2;
+  border-bottom: 1px solid #ffffff1a;
+  backdrop-filter: blur(12px);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+.brand-icon {
+  width: 37px;
+  height: 37px;
+  border: 1px solid var(--green);
+  color: var(--green);
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+}
+.brand small {
+  display: block;
+  color: var(--muted);
+  font: 9px var(--mono);
+}
+nav { display: flex; gap: 26px; font-size: 12px; }
+nav a:hover { color: var(--green); }
+.menu { display: none; background: none; color: white; border: 1px solid #ffffff44; padding: 7px 10px; }
+
+.container { width: min(1120px, calc(100% - 48px)); margin: auto; }
+.mono { font-family: var(--mono); letter-spacing: 1px; font-size: 10px; }
+.green { color: var(--green); }
+.muted { color: var(--muted); }
+
+.hero {
+  min-height: 640px;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  align-items: center;
+  gap: 70px;
+  padding-top: 70px;
+  padding-bottom: 80px;
+  position: relative;
+}
+.status { color: var(--green); font: 10px var(--mono); letter-spacing: 1.3px; }
+.status::before { content: "●"; margin-right: 9px; }
+h1 {
+  font-size: clamp(48px, 6.5vw, 78px);
+  font-weight: 500;
+  letter-spacing: -3px;
+  line-height: 1.08;
+  margin: 25px 0;
+}
+h1 em, h2 em { font-family: var(--serif); color: var(--green); }
+h2 { font-size: clamp(34px, 4.5vw, 52px); line-height: 1.15; font-weight: 500; letter-spacing: -1.5px; }
+.subtitle { max-width: 460px; color: #b8c2cd; font-size: 16px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 18px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 700;
+  transition: .2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.primary { background: var(--green); color: var(--navy); }
+.secondary { background: transparent; border-color: #637083; color: white; }
+.hero-note { margin-top: 48px; color: #8b99a8; font: 9px var(--mono); letter-spacing: 1px; }
+
+.case {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 23px;
+  transform: rotate(1.3deg);
+  box-shadow: 12px 14px 0 #0003;
+}
+.case-top {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #cfc4b3;
+  padding-bottom: 12px;
+  color: #68736c;
+  font: 9px var(--mono);
+}
+.portrait {
+  min-height: 180px;
+  margin: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  background: repeating-linear-gradient(135deg,#ded5c7,#ded5c7 2px,#d5cbbb 2px,#d5cbbb 7px);
+  color: #69746b;
+  font: 9px var(--mono);
+}
+.question-circle {
+  width: 75px;
+  height: 75px;
+  border: 1px solid #87958a;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 42px var(--serif);
+}
+.fact {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  gap: 6px;
+  border-top: 1px solid #d2c7b7;
+  padding: 11px 0;
+  font-size: 11px;
+}
+.fact span:first-child { color: #72796f; font: 9px var(--mono); }
+.case-warning { background: #e1d7c8; padding: 12px; font-size: 10px; color: #5b655e; margin-top: 12px; }
+.case-warning strong { color: var(--red); font-family: var(--mono); }
+.hero-index { position: absolute; bottom: 24px; right: 0; color: #687789; }
+
+.section { padding: 95px 0; }
+.label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 10px var(--mono);
+  letter-spacing: 1px;
+  color: #839187;
+}
+.label span { border: 1px solid #79927f; padding: 4px 7px; color: var(--green); }
+.paper-section { background: var(--paper); color: var(--ink); padding: 90px 0; }
+.paper-section .label { color: #68756c; }
+.paper-section .label span { color: var(--darkgreen); }
+.brief-grid {
+  display: grid;
+  grid-template-columns: 1fr .8fr;
+  gap: 70px;
+  align-items: center;
+  margin-top: 35px;
+}
+.brief-grid h2 { margin-top: 0; }
+.brief-copy { color: #626c64; max-width: 500px; font-size: 16px; }
+.note {
+  background: #faf5eb;
+  padding: 28px;
+  box-shadow: 4px 6px 0 #d3c8b8;
+  transform: rotate(-1deg);
+  position: relative;
+}
+.note::before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--red);
+  top: -5px;
+  left: 50%;
+}
+.note h3 { font: italic 20px var(--serif); color: var(--darkgreen); }
+.note p { font: 14px/1.9 var(--serif); color: #505a52; }
+.note-foot { border-top: 1px solid #ddd3c3; padding-top: 12px; color: #8a8d81; }
+
+.central-question {
+  margin-top: 55px;
+  padding-top: 28px;
+  border-top: 1px solid #d3c9b9;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.central-question .question-circle { width: 48px; height: 48px; flex-shrink: 0; font-size: 28px; color: var(--darkgreen); }
+.central-question h3 { font: 22px var(--serif); margin: 4px 0; }
+
+.evidence-section { background: #152235; }
+.heading-row { display: flex; justify-content: space-between; gap: 30px; align-items: end; }
+.heading-row h2 { margin-bottom: 0; }
+.heading-row > p { max-width: 310px; color: #b2bdc8; font-size: 13px; }
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 30px 0 22px;
+  color: #a7b2be;
+  font: 9px var(--mono);
+}
+.track { height: 3px; background: #334257; flex: 1; }
+.track span { display: block; width: 0; height: 100%; background: var(--green); transition: width .3s; }
+.reset { background: none; border: 0; color: var(--green); font: 10px var(--mono); }
+.evidence-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; align-items: start; }
+.evidence {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 15px;
+  transition: .2s;
+}
+.evidence:hover { transform: translateY(-4px); }
+.evidence.examined { outline: 2px solid var(--green); outline-offset: 3px; }
+.evidence-head { display: flex; justify-content: space-between; color: #6e796f; font: 9px var(--mono); }
+.art {
+  height: 145px;
+  margin: 14px 0;
+  background: #dcd4c4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.dino {
+  width: 76px;
+  height: 61px;
+  background: #287d60;
+  border-radius: 48% 48% 35% 40%;
+  box-shadow: inset -8px -5px #185b47;
+  color: #dcebd0;
+  display: grid;
+  place-items: center;
+  font: 13px var(--mono);
+  position: relative;
+}
+.dino::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 29px;
+  border-radius: 50%;
+  background: #287d60;
+  border: 2px solid #1f624c;
+  top: -12px;
+  right: -10px;
+}
+.dino::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #13271f;
+  top: -2px;
+  right: 0;
+}
+.lines-art { padding: 25px; flex-direction: column; align-items: flex-start; gap: 12px; }
+.line { height: 3px; background: #9fa194; width: 70%; }
+.line.long { width: 95%; }
+.line.short { width: 43%; }
+.circle-note {
+  position: absolute;
+  right: 15px;
+  top: 30px;
+  width: 58px;
+  height: 58px;
+  border: 2px solid var(--red);
+  color: var(--red);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 10px var(--mono);
+  transform: rotate(-12deg);
+}
+.bars-art { background: #d7dfd6; flex-direction: column; gap: 12px; }
+.bars { height: 75px; display: flex; align-items: end; gap: 7px; border-bottom: 1px solid #84968b; padding: 0 15px; }
+.bars i { display: block; width: 13px; height: 40%; background: #4c806b; }
+.bars i:nth-child(2) { height: 70%; }
+.bars i:nth-child(3) { height: 54%; }
+.bars i:nth-child(4) { height: 90%; }
+.bars i:nth-child(5) { height: 28%; }
+.bars i:nth-child(6) { height: 62%; }
+.bars-art small { font: 9px var(--mono); color: #526c5d; }
+.contradiction { background: #e2d6c6; font: 8px var(--mono); }
+.contradiction span { position: absolute; }
+.word-a { left: 6px; top: 30px; }
+.word-b { right: 6px; bottom: 30px; }
+.cross { height: 1px; width: 140px; background: var(--red); transform: rotate(-38deg); }
+.evidence h3 { font: 20px var(--serif); margin: 7px 0; }
+.evidence p { color: #606a62; font-size: 11px; line-height: 1.8; }
+.evidence .micro { font: 9px var(--mono); color: var(--darkgreen); letter-spacing: 1px; }
+.inspect {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid #d1c7b8;
+  padding: 12px 0 2px;
+  background: transparent;
+  color: var(--darkgreen);
+  display: flex;
+  justify-content: space-between;
+  font: 10px var(--mono);
+}
+.detail { border-top: 1px dashed #c9bfaf; margin-top: 13px; padding-top: 12px; }
+.detail strong { font: 9px var(--mono); color: var(--red); }
+.detail p { font-size: 11px; }
+.complete {
+  background: #203b36;
+  border: 1px solid #477963;
+  margin-top: 25px;
+  padding: 20px;
+  color: #dcefe4;
+}
+.complete p { font-size: 12px; color: #b9cfc3; }
+.complete a { color: var(--green); font: 10px var(--mono); }
+[hidden] { display: none !important; }
+
+.theory-section { background: var(--paper); color: var(--ink); }
+.theory-intro { display: grid; grid-template-columns: 1fr .75fr; gap: 50px; align-items: end; margin: 30px 0; }
+.theory-intro h2 { margin: 0; }
+.theory-intro p { color: #626d65; font-size: 13px; }
+.board { border: 1px solid #cfc5b5; background: #e9e0d2; padding: 24px; }
+.board-head { display: flex; justify-content: space-between; gap: 15px; border-bottom: 1px solid #d1c7b8; padding-bottom: 15px; color: #788177; font: 9px var(--mono); }
+.group { padding: 22px 0; border-bottom: 1px solid #d1c7b8; }
+.group-title { color: #78867d; font: 9px var(--mono); margin-bottom: 12px; }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  text-align: left;
+  border: 1px solid #d1c7b8;
+  background: #f4eee4;
+  color: var(--ink);
+}
+.choice:hover { border-color: #719b83; }
+.choice.selected { background: #dce8dc; border-color: var(--darkgreen); box-shadow: inset 3px 0 var(--darkgreen); }
+.letter {
+  border: 1px solid #c7bdad;
+  min-width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  font: 10px var(--mono);
+}
+.choice strong { display: block; font-size: 12px; }
+.choice small { display: block; color: #727970; font-size: 10px; margin-top: 4px; }
+.verdict { margin-top: 22px; }
+.result { margin-top: 24px; padding: 25px; background: #f7f2e8; border: 1px solid #cfc5b5; }
+.result h3 { font: 27px var(--serif); }
+.result p { color: #566158; font-size: 13px; }
+.result .fineprint { border-top: 1px solid #ded5c7; padding-top: 12px; color: #898b7f; font-size: 10px; }
+
+.final {
+  background: #203b36;
+  text-align: center;
+  padding: 90px 24px;
+}
+.final h2 { font-size: clamp(44px,6vw,68px); }
+.final p { max-width: 550px; margin: 0 auto 28px; color: #c4d4c9; font-size: 14px; }
+.light { background: var(--paper); color: var(--ink); }
+footer {
+  position: static;
+  min-height: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 25px max(24px, calc((100% - 1120px)/2));
+  color: #8a97a4;
+  font: 9px var(--mono);
+  border-top: 1px solid #ffffff1a;
+}
+footer a { color: #c2ccc9; }
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 15px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 30;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 12px 18px;
+  font: 11px var(--mono);
+  transition: .2s;
+  max-width: calc(100% - 32px);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media(max-width: 900px) {
+  .hero { gap: 35px; }
+  .evidence-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width: 650px) {
+  header { padding: 13px 18px; }
+  .brand { font-size: 9px; }
+  .brand small { font-size: 7px; }
+  .menu { display: block; }
+  nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: var(--navy2);
+    flex-direction: column;
+    gap: 16px;
+  }
+  nav.open { display: flex; }
+  .container { width: calc(100% - 36px); }
+  .hero { grid-template-columns: 1fr; padding-top: 50px; gap: 35px; }
+  h1 { font-size: 52px; }
+  .case { max-width: 430px; width: 100%; justify-self: center; }
+  .hero-index { bottom: 15px; }
+  .section, .paper-section { padding: 65px 0; }
+  .brief-grid, .theory-intro { grid-template-columns: 1fr; gap: 25px; }
+  .heading-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .heading-row > p { margin-top: 0; }
+  .evidence-grid { grid-template-columns: 1fr; }
+  .art { height: 170px; }
+  .board { padding: 15px; }
+  .board-head { flex-direction: column; }
+  .choices { grid-template-columns: 1fr; }
+  footer { padding: 23px 18px; }
+}
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto; transition: none; }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <a class="logo" href="#">MY SITE.</a>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<header>
+  <a href="#home" class="brand">
+    <span class="brand-icon">CF</span>
+    <span>THE PERSONAL ARCHIVE<small>INDEPENDENT INVESTIGATION UNIT</small></span>
+  </a>
+  <nav id="nav">
+    <a href="#brief">Case brief</a>
+    <a href="#evidence">Evidence locker</a>
+    <a href="#theory">Build a theory</a>
+  </nav>
+  <button class="menu" id="menu" aria-expanded="false">☰</button>
+</header>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">A WEBSITE BUILT BY ME</p>
-      <h1>Curiosity starts<br>with a question.</h1>
-      <p class="intro">
-        Welcome to my corner of the internet.
-        This is where I explore ideas, projects, and discoveries.
-      </p>
-      <a class="button" href="#about">Explore my world ↗</a>
-    </section>
+<main id="home">
+  <section class="hero container">
+    <div>
+      <div class="status">CASE STATUS: OPEN / FILE NO. 001</div>
+      <p class="mono muted" style="margin-top:35px">CONFIDENTIAL // FOR THE CURIOUS</p>
+      <h1>The Subject:<br><em>Ngan Nguyen</em></h1>
+      <p class="subtitle">A study in questions, contradictions, and the evidence we leave behind.</p>
+      <div class="actions">
+        <a href="#brief" class="btn primary">Open the case ↗</a>
+        <button class="btn secondary" id="random">Show me a clue ⌁</button>
+      </div>
+      <p class="hero-note">THE CONCLUSION IS NOT YET FINAL.</p>
+    </div>
 
-    <section id="about" class="section">
-      <p class="eyebrow">01 / ABOUT</p>
-      <h2>A little about me.</h2>
-      <p>This is where I'll introduce myself and my interests.</p>
-    </section>
+    <aside class="case">
+      <div class="case-top"><span>CASE SUMMARY</span><span>001-A</span></div>
+      <div class="portrait">
+        <div class="question-circle">?</div>
+        IDENTITY UNDER REVIEW
+      </div>
+      <div class="fact"><span>SUBJECT</span><strong>N. Nguyen</strong></div>
+      <div class="fact"><span>KNOWN PATTERN</span><strong>Asks “why?”</strong></div>
+      <div class="fact"><span>METHOD</span><strong>Observe → Test → Revise</strong></div>
+      <div class="fact"><span>CONFIDENCE</span><strong>INCOMPLETE</strong></div>
+      <div class="case-warning"><strong>NOTE /</strong> Initial impressions may be misleading. Examine the evidence before drawing a conclusion.</div>
+    </aside>
+    <span class="hero-index mono">INVESTIGATION / 01</span>
+  </section>
 
-    <section id="projects" class="section">
-      <p class="eyebrow">02 / PROJECTS</p>
-      <h2>Things I've explored.</h2>
-      <p>Research, experiments, ideas, and work in progress.</p>
-    </section>
+  <section class="paper-section" id="brief">
+    <div class="container">
+      <div class="label"><span>00</span> THE INCIDENT</div>
+      <div class="brief-grid">
+        <div>
+          <h2>A person is not<br>the same as a profile.</h2>
+          <p class="brief-copy">The file looks straightforward at first glance. Student. Researcher. Builder. A list of interests that seems to explain the person behind them.</p>
+          <p class="brief-copy">But the record is incomplete. The real story is hidden in the questions, choices, and revisions between those labels.</p>
+        </div>
+        <div class="note">
+          <h3>Investigator's note</h3>
+          <p>These labels describe what the subject does. They do not yet explain why she does it, what changes her mind, or what happens when the evidence disagrees with her expectations.</p>
+          <div class="note-foot mono">OBJECTIVE: LOOK CLOSER ✳</div>
+        </div>
+      </div>
+      <div class="central-question">
+        <div class="question-circle">?</div>
+        <div><div class="mono" style="color:#718075">CENTRAL QUESTION</div><h3>What can the evidence reveal that a résumé cannot?</h3></div>
+      </div>
+    </div>
+  </section>
 
-    <section id="contact" class="section">
-      <p class="eyebrow">03 / CONTACT</p>
-      <h2>Let's connect.</h2>
-      <p>Add your preferred public contact information here.</p>
-    </section>
-  </main>
+  <section class="section evidence-section" id="evidence">
+    <div class="container">
+      <div class="heading-row">
+        <div>
+          <div class="label"><span>01</span> THE EVIDENCE LOCKER</div>
+          <h2>Exhibits & observations</h2>
+        </div>
+        <p>Inspect each exhibit. The details matter more than the label on the folder.</p>
+      </div>
+      <div class="progress">
+        <span id="progressText">0 OF 4 EXHIBITS EXAMINED</span>
+        <div class="track"><span id="progressBar"></span></div>
+        <button class="reset" id="reset">RESET</button>
+      </div>
 
-  <footer>Designed and coded by me.</footer>
-  <script src="script.js"></script>
+      <div class="evidence-grid">
+        <article class="evidence" data-id="0">
+          <div class="evidence-head"><span>EXHIBIT E-001</span><span>◈</span></div>
+          <div class="art"><div class="dino">JN</div></div>
+          <p class="micro">PHYSICAL CLUE</p>
+          <h3>The worn keepsake</h3>
+          <p>An emerald dinosaur, worn down by years of being carried. A small object becomes a record of time, memory, and changing priorities.</p>
+          <button class="inspect" aria-expanded="false">Inspect evidence <span>＋</span></button>
+          <div class="detail" hidden>
+            <strong>OBSERVATION</strong>
+            <p>Wear does not erase an object's history. What looks like damage may also be evidence that something mattered enough to be kept.</p>
+            <strong>LEAD TO FOLLOW</strong>
+            <p>Look for what remains visible beneath the surface.</p>
+          </div>
+        </article>
+
+        <article class="evidence" data-id="1">
+          <div class="evidence-head"><span>EXHIBIT E-002</span><span>⌕</span></div>
+          <div class="art lines-art">
+            <span class="line long"></span><span class="line"></span><span class="line short"></span>
+            <span class="circle-note">WHY?</span><span class="line long"></span>
+          </div>
+          <p class="micro">BEHAVIORAL CLUE</p>
+          <h3>The unanswered question</h3>
+          <p>Curiosity moves from private wondering to action: reading, testing, asking, and sending the message before certainty arrives.</p>
+          <button class="inspect" aria-expanded="false">Inspect evidence <span>＋</span></button>
+          <div class="detail" hidden>
+            <strong>OBSERVATION</strong>
+            <p>The subject does not always wait to feel ready. Sometimes the next step is an experiment rather than a conclusion.</p>
+            <strong>LEAD TO FOLLOW</strong>
+            <p>Distinguish between wanting an answer and being willing to investigate it.</p>
+          </div>
+        </article>
+
+        <article class="evidence" data-id="2">
+          <div class="evidence-head"><span>EXHIBIT E-003</span><span>⌘</span></div>
+          <div class="art bars-art">
+            <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <small>DATA ≠ ANSWER</small>
+          </div>
+          <p class="micro">ANALYTICAL CLUE</p>
+          <h3>The imperfect result</h3>
+          <p>A first attempt rarely tells the whole story. A quiet dashboard, a failed prediction, or unexpected feedback can become useful information.</p>
+          <button class="inspect" aria-expanded="false">Inspect evidence <span>＋</span></button>
+          <div class="detail" hidden>
+            <strong>OBSERVATION</strong>
+            <p>A disappointing result is still a result. The next question is whether the subject protects the original idea or learns from what happened.</p>
+            <strong>LEAD TO FOLLOW</strong>
+            <p>Watch what changes after the evidence challenges the plan.</p>
+          </div>
+        </article>
+
+        <article class="evidence" data-id="3">
+          <div class="evidence-head"><span>EXHIBIT E-004</span><span>⟷</span></div>
+          <div class="art contradiction">
+            <span class="word-a">INDEPENDENCE</span>
+            <span class="cross"></span>
+            <span class="word-b">CONNECTION</span>
+          </div>
+          <p class="micro">CONTRADICTORY CLUE</p>
+          <h3>The two-sided record</h3>
+          <p>The subject values independence, yet other people can reveal questions she could not see alone. The two facts may coexist.</p>
+          <button class="inspect" aria-expanded="false">Inspect evidence <span>＋</span></button>
+          <div class="detail" hidden>
+            <strong>OBSERVATION</strong>
+            <p>Contradictions do not always mean one side is false. Sometimes a more accurate account must hold both sides at once.</p>
+            <strong>LEAD TO FOLLOW</strong>
+            <p>Test whether independence means doing everything alone—or choosing how to think with others.</p>
+          </div>
+        </article>
+      </div>
+      <div class="complete" id="complete" hidden>
+        <strong>✓ ALL EXHIBITS EXAMINED</strong>
+        <p>You have enough evidence to form a provisional theory. The verdict is yours to build.</p>
+        <a href="#theory">PROCEED TO RECONSTRUCTION ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section theory-section" id="theory">
+    <div class="container">
+      <div class="label"><span>02</span> RECONSTRUCT THE STORY</div>
+      <div class="theory-intro">
+        <h2>What is your theory?</h2>
+        <p>A good investigator does not simply collect clues. They decide how the clues fit together—and remain willing to revise the explanation.</p>
+      </div>
+
+      <div class="board">
+        <div class="board-head"><span>WORKING HYPOTHESES</span><span>SELECT ONE FROM EACH PAIR</span></div>
+
+        <div class="group">
+          <div class="group-title">01 / MOTIVE</div>
+          <div class="choices" data-group="motive">
+            <button class="choice" data-value="certainty"><span class="letter">A</span><span><strong>The subject seeks certainty.</strong><small>Questions are a way to reduce the unknown.</small></span></button>
+            <button class="choice" data-value="discovery"><span class="letter">B</span><span><strong>The subject seeks discovery.</strong><small>Questions open doors, even without guarantees.</small></span></button>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-title">02 / RESPONSE TO FAILURE</div>
+          <div class="choices" data-group="failure">
+            <button class="choice" data-value="protect"><span class="letter">A</span><span><strong>Protect the original plan.</strong><small>Consistency is the priority.</small></span></button>
+            <button class="choice" data-value="revise"><span class="letter">B</span><span><strong>Revise the working theory.</strong><small>New evidence earns a place in the story.</small></span></button>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-title">03 / INDEPENDENCE</div>
+          <div class="choices" data-group="independence">
+            <button class="choice" data-value="alone"><span class="letter">A</span><span><strong>Work alone to stay in control.</strong><small>Other opinions can complicate the process.</small></span></button>
+            <button class="choice" data-value="selective"><span class="letter">B</span><span><strong>Choose when to invite others in.</strong><small>Independence can include connection.</small></span></button>
+          </div>
+        </div>
+
+        <button class="btn primary verdict" id="verdict">Generate provisional theory ↗</button>
+
+        <div class="result" id="result" hidden aria-live="polite">
+          <div class="mono" style="color:#a65e53">PROVISIONAL FINDING / NOT FINAL</div>
+          <h3 id="resultTitle">A working interpretation</h3>
+          <p id="resultText"></p>
+          <p class="fineprint">This is an interpretation of the evidence—not a diagnosis or a final definition of a person.</p>
+          <button class="reset" id="revise">REOPEN THE INVESTIGATION ↺</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="container">
+      <p class="mono green">CASE FILE 001 / CLOSING NOTE</p>
+      <div class="question-circle" style="margin:30px auto;color:var(--green)">?</div>
+      <h2>The case remains<br><em>open.</em></h2>
+      <p>The point was never to find one perfect label. It was to notice the evidence, question the first explanation, and keep becoming someone the old file could not fully predict.</p>
+      <a href="#home" class="btn light">Return to the beginning ↑</a>
+      <p class="mono" style="margin-top:45px;color:#92ad9d">END OF REPORT — FOR NOW</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>PERSONAL ARCHIVE © <span id="year"></span></span>
+  <span>OBSERVE CAREFULLY. CONCLUDE HUMBLY.</span>
+  <a href="#home">BACK TO TOP ↑</a>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $ = (selector, parent = document) => parent.querySelector(selector);
+const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+
+$("#year").textContent = new Date().getFullYear();
+
+const nav = $("#nav");
+$("#menu").addEventListener("click", () => {
+  nav.classList.toggle("open");
+  $("#menu").setAttribute("aria-expanded", nav.classList.contains("open"));
+});
+$$("nav a").forEach(link => link.addEventListener("click", () => nav.classList.remove("open")));
+
+const exhibits = $$(".evidence");
+const progressText = $("#progressText");
+const progressBar = $("#progressBar");
+const complete = $("#complete");
+const toast = $("#toast");
+let toastTimer;
+
+function notify(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2500);
+}
+
+function updateProgress() {
+  const count = exhibits.filter(card => card.classList.contains("examined")).length;
+  progressText.textContent = `${count} OF ${exhibits.length} EXHIBITS EXAMINED`;
+  progressBar.style.width = `${count / exhibits.length * 100}%`;
+  complete.hidden = count !== exhibits.length;
+}
+
+exhibits.forEach(card => {
+  const button = $(".inspect", card);
+  const detail = $(".detail", card);
+  button.addEventListener("click", () => {
+    const opening = detail.hidden;
+    detail.hidden = !opening;
+    button.setAttribute("aria-expanded", String(opening));
+    button.innerHTML = opening
+      ? 'Close evidence <span>−</span>'
+      : 'Inspect evidence <span>＋</span>';
+    if (opening) card.classList.add("examined");
+    updateProgress();
+  });
+});
+
+$("#reset").addEventListener("click", () => {
+  exhibits.forEach(card => {
+    card.classList.remove("examined");
+    $(".detail", card).hidden = true;
+    const button = $(".inspect", card);
+    button.setAttribute("aria-expanded", "false");
+    button.innerHTML = 'Inspect evidence <span>＋</span>';
+  });
+  updateProgress();
+  notify("Evidence locker reset.");
+});
+
+$("#random").addEventListener("click", () => {
+  const available = exhibits.filter(card => !card.classList.contains("examined"));
+  const pool = available.length ? available : exhibits;
+  const card = pool[Math.floor(Math.random() * pool.length)];
+  const detail = $(".detail", card);
+  if (detail.hidden) $(".inspect", card).click();
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+  notify("New lead: " + $("h3", card).textContent);
+});
+
+const answers = { motive: null, failure: null, independence: null };
+
+$$(".choice").forEach(button => {
+  button.addEventListener("click", () => {
+    const group = button.closest(".choices");
+    const key = group.dataset.group;
+    answers[key] = button.dataset.value;
+    $$(".choice", group).forEach(choice => {
+      choice.classList.toggle("selected", choice === button);
+      choice.setAttribute("aria-pressed", String(choice === button));
+    });
+    $("#result").hidden = true;
+  });
+});
+
+$("#verdict").addEventListener("click", () => {
+  const missing = Object.keys(answers).filter(key => !answers[key]);
+  if (missing.length) {
+    notify("Choose one hypothesis in each section first.");
+    $(`[data-group="${missing[0]}"]`).scrollIntoView({
+      behavior: "smooth", block: "center"
+    });
+    return;
+  }
+
+  const motive = answers.motive === "discovery"
+    ? "The evidence suggests that the subject may be motivated less by certainty than by the possibility of discovering something unexpected."
+    : "The evidence suggests that certainty may help the subject feel oriented when facing unfamiliar questions.";
+
+  const failure = answers.failure === "revise"
+    ? "Her response to an imperfect result may be the more revealing clue: a first attempt can become a starting point rather than a verdict."
+    : "The subject may value consistency, though future evidence could test how flexible that commitment is.";
+
+  const independence = answers.independence === "selective"
+    ? "Independence does not necessarily require isolation. Choosing when to invite other perspectives may be part of the subject's own decision-making."
+    : "The record raises a question about self-reliance: could collaboration reveal information the subject cannot access alone?";
+
+  $("#resultTitle").textContent =
+    answers.motive === "discovery" && answers.failure === "revise"
+      ? "A curious, revisable mind"
+      : answers.independence === "selective"
+        ? "An evolving working theory"
+        : "A search for a dependable answer";
+
+  $("#resultText").textContent = `${motive} ${failure} ${independence}`;
+  $("#result").hidden = false;
+  $("#result").scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+
+$("#revise").addEventListener("click", () => {
+  $("#result").hidden = true;
+  $("#theory").scrollIntoView({ behavior: "smooth" });
+});
+</script>
 </body>
 </html>
