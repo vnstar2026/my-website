@@ -6,7 +6,7 @@
   No image-upload form is shown to visitors; all media is managed here in code.
 */
 const SITE_MEDIA = {
-  portrait: "PASTE_YOUR_PORTRAIT_IMAGE_URL_HERE",
+  portrait: "https://cdn.phototourl.com/anon/2026-11-23-4e35d84b-a0a4-478f-9376-52500a0ed4cc.jpg",
   introVideo: "PASTE_YOUR_INTRO_VIDEO_URL_HERE"
 };
 
