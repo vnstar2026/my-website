@@ -7,12 +7,10 @@
   3. Add slideshow image URLs in the numbered entries.
   4. No image-upload form is displayed to visitors.
 */
-
 const SITE_MEDIA = {
-  portrait: "https://cdn.phototourl.com/anon/2026-11-23-4e35d84b-a0a4-478f-9376-52500a0ed4cc.jpg",
+  portrait: "assets/jennie.jpg",
   introVideo: "PASTE_YOUR_INTRO_VIDEO_URL_HERE"
 };
-
 
 // --------------------------------------------------
 // 01. CLUE ARCHIVE
